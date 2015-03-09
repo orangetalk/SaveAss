@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
     private void addNotificationStatus(){
         int notifyID = 1;
         mNotifyBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("New Message")
+                .setContentTitle("Save Ass")
                 .setContentText("You've received new messages.")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setTicker("Count down started");
