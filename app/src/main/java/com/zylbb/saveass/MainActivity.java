@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -22,32 +23,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        addNotificationStatus();
     }
-
-    private void addNotificationStatus(){
-        int notifyID = 1;
-        mNotifyBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("Save Ass")
-                .setContentText("You've received new messages.")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setTicker("Count down started");
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, MainActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-// Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainActivity.class);
-// Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mNotifyBuilder.setContentIntent(resultPendingIntent);
-        mNotificationManager.notify(notifyID, mNotifyBuilder.build());
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,5 +45,40 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //called when start button is clicked to start a countdown timer
+    public void startCountdown(View view){
+        addNotificationStatus();
+        returnHome();
+    }
+
+    private void addNotificationStatus(){
+        int notifyID = 1;
+        mNotifyBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText("3 "+getString(R.string.notification_content))
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setTicker(getString(R.string.notification_ticker));
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mNotifyBuilder.setContentIntent(resultPendingIntent);
+        mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+    }
+
+    private void returnHome(){
+        Intent home = new Intent(Intent.ACTION_MAIN);
+        home.addCategory(Intent.CATEGORY_HOME);
+        startActivity(home);
     }
 }

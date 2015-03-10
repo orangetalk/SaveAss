@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="notification_content">minutes left</string>
+    <string name="notification_ticker">Countdown started</string>
+
+    <string name="button_start">Start</string>
 </resources>
