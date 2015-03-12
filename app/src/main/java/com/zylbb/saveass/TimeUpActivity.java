@@ -1,22 +1,30 @@
 package com.zylbb.saveass;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends ActionBarActivity {
+
+public class TimeUpActivity extends ActionBarActivity {
+    NotificationManager mNotificationManager = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_time_up);
+
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_time_up, menu);
         return true;
     }
 
@@ -35,8 +43,14 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //called when start button is clicked to start a countdown timer
-    public void startCountdown(View view){
+    //called when done button is clicked to start a countdown timer
+    public void doneToilet(View view){
+        mNotificationManager.cancel(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID);
+        System.exit(0);
+    }
+
+    //called when 3 more minutes button is clicked to start a countdown timer
+    public void start3MoreMinutesCountdown(View view){
         SaveAssCountDownTimer saveAssCountDownTimer = new SaveAssCountDownTimer(this, SaveAssConstants.TIME_FOR_TOILET*60*1000, 1000);
         saveAssCountDownTimer.startSaveAss();
         saveAssCountDownTimer.start();

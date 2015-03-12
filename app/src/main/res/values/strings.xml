@@ -8,4 +8,7 @@
     <string name="notification_ticker">Countdown started</string>
 
     <string name="button_start">Start</string>
+    <string name="title_activity_time_up">TimeUpActivity</string>
+    <string name="button_done">Done</string>
+    <string name="button_3_more_minuties">3 more minutes</string>
 </resources>
