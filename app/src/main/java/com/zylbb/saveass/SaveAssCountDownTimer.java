@@ -6,13 +6,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
+
+import java.util.Random;
 
 /**
  * Created by Administrator on 2015/3/12.
  */
 class SaveAssCountDownTimer extends CountDownTimer {
     int lastTimeLeftInMinute = SaveAssConstants.TIME_FOR_TOILET;
+    int timeToAttack = 7;
     Activity contextActivity = null;
 
     public SaveAssCountDownTimer(Activity contextActivity, long millisInFuture, long countDownInterval) {
@@ -28,10 +32,18 @@ class SaveAssCountDownTimer extends CountDownTimer {
     @Override
     public void onTick(long millisUntilFinished) {
         int timeLeftInMinute = (int)(millisUntilFinished/1000/60);
-
         if(timeLeftInMinute!=lastTimeLeftInMinute) {
             updateCountdownNotification(timeLeftInMinute);
             lastTimeLeftInMinute = timeLeftInMinute;
+        }
+
+        int timeLeftInSeconds = (int)(millisUntilFinished/1000);
+        if(contextActivity instanceof TimeUpActivity){
+            if(timeLeftInSeconds%timeToAttack==0){
+                Vibrator vibrator = (Vibrator) contextActivity.getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(SaveAssConstants.VIBRATE_DURATION);
+                timeToAttack = new Random().nextInt(20);
+            }
         }
     }
 

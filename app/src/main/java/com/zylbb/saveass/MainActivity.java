@@ -1,16 +1,23 @@
 package com.zylbb.saveass;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends ActionBarActivity {
+    NotificationManager mNotificationManager = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
     @Override
@@ -35,10 +42,25 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //called when start button is clicked to start a countdown timer
-    public void startCountdown(View view){
+    //called when start_done button is clicked to start or stop a countdown timer
+    public void start_doneCountdown(View view){
+        Button button = (Button)view;
+        if(button.getText().equals(getString(R.string.button_start))) {
+            button.setText(getString(R.string.button_done));
+            startCountdown();
+        }
+        else
+            doneToilet();
+    }
+
+    private void startCountdown(){
         SaveAssCountDownTimer saveAssCountDownTimer = new SaveAssCountDownTimer(this, SaveAssConstants.TIME_FOR_TOILET*60*1000, 1000);
         saveAssCountDownTimer.startSaveAss();
         saveAssCountDownTimer.start();
+    }
+
+    private void doneToilet(){
+        mNotificationManager.cancel(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID);
+        System.exit(0);
     }
 }
