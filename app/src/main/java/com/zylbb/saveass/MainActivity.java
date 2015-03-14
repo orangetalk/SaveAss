@@ -2,8 +2,10 @@ package com.zylbb.saveass;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +18,16 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra(SaveAssConstants.EXTRA_IS_FROM_NOTIFICATION, false)){
+            Button button = (Button)findViewById(R.id.start_done_button);
+            button.setText(getString(R.string.button_done));
+            Log.d("Activity Lifecycle", "MainActivity onCreate from notification");
+        }
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Log.d("Activity Lifecycle", "MainActivity onCreate");
     }
 
     @Override
@@ -62,5 +72,30 @@ public class MainActivity extends ActionBarActivity {
     private void doneToilet(){
         mNotificationManager.cancel(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID);
         System.exit(0);
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        Log.d("Activity Lifecycle", "MainActivity onRestart");
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        Log.d("Activity Lifecycle", "MainActivity onStart");
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.d("Activity Lifecycle", "MainActivity onStop");
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Log.d("Activity Lifecycle", "MainActivity onDestroy");
     }
 }

@@ -13,6 +13,7 @@ import java.util.Random;
 
 /**
  * Created by Administrator on 2015/3/12.
+ * SaveAssCountDownTimer: a 3 minutes countdown timer which will be triggered when start toileting
  */
 class SaveAssCountDownTimer extends CountDownTimer {
     int lastTimeLeftInMinute = SaveAssConstants.TIME_FOR_TOILET;
@@ -66,7 +67,8 @@ class SaveAssCountDownTimer extends CountDownTimer {
                 .setOngoing(true);
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(contextActivity, MainActivity.class);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(contextActivity, 0, resultIntent, 0);
+        resultIntent.putExtra(SaveAssConstants.EXTRA_IS_FROM_NOTIFICATION, true);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(contextActivity, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         mNotifyBuilder.setContentIntent(resultPendingIntent);
         mNotificationManager.notify(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID, mNotifyBuilder.build());
     }
