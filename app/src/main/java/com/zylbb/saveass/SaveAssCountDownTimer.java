@@ -66,8 +66,10 @@ class SaveAssCountDownTimer extends CountDownTimer {
                 .setTicker(contextActivity.getString(R.string.notification_ticker))
                 .setOngoing(true);
         // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(contextActivity, MainActivity.class);
+        //Intent resultIntent = new Intent(contextActivity, MainActivity.class);
+        Intent resultIntent = new Intent(contextActivity, CrackScreenActivity.class); //this should be replaced by the above line
         resultIntent.putExtra(SaveAssConstants.EXTRA_IS_FROM_NOTIFICATION, true);
+        resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(contextActivity, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         mNotifyBuilder.setContentIntent(resultPendingIntent);
         mNotificationManager.notify(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID, mNotifyBuilder.build());
