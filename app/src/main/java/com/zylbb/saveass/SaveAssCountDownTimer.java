@@ -15,14 +15,17 @@ import java.util.Random;
  * Created by Administrator on 2015/3/12.
  * SaveAssCountDownTimer: a 3 minutes countdown timer which will be triggered when start toileting
  */
-class SaveAssCountDownTimer extends CountDownTimer {
-    int lastTimeLeftInMinute = SaveAssConstants.TIME_FOR_TOILET;
-    int timeToAttack = 7;
-    Activity contextActivity = null;
+enum AttackMode {VIBRATE, CRACK_SCREEN, LOCK_SCREEN}
 
-    public SaveAssCountDownTimer(Activity contextActivity, long millisInFuture, long countDownInterval) {
+public class SaveAssCountDownTimer extends CountDownTimer {
+    int lastTimeLeftInMinute = SaveAssConstants.TIME_FOR_TOILET;
+    int mTimeToAttack = 7;
+    Activity mContextActivity = null;
+    AttackMode mAttackMode = AttackMode.VIBRATE;
+
+    public SaveAssCountDownTimer(Activity mContextActivity, long millisInFuture, long countDownInterval) {
         super(millisInFuture, countDownInterval);
-        this.contextActivity = contextActivity;
+        this.mContextActivity = mContextActivity;
     }
 
     @Override
@@ -38,14 +41,46 @@ class SaveAssCountDownTimer extends CountDownTimer {
             lastTimeLeftInMinute = timeLeftInMinute;
         }
 
+        //if the timer is started by TimeUpActivity, try to attack the loser
         int timeLeftInSeconds = (int)(millisUntilFinished/1000);
-        if(contextActivity instanceof TimeUpActivity){
-            if(timeLeftInSeconds%timeToAttack==0){
-                Vibrator vibrator = (Vibrator) contextActivity.getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(SaveAssConstants.VIBRATE_DURATION);
-                timeToAttack = new Random().nextInt(20);
+        if(mContextActivity instanceof TimeUpActivity){
+            if(timeLeftInSeconds%mTimeToAttack==0){
+                attackLoser();
+                mTimeToAttack = new Random().nextInt(20);
             }
         }
+    }
+
+    private void attackLoser(){
+        switch (mAttackMode){
+            case VIBRATE:
+                attackLoserByVibrate();
+                mAttackMode = AttackMode.CRACK_SCREEN;
+                break;
+            case CRACK_SCREEN:
+                attackLoserByCrackScreen();
+                mAttackMode = AttackMode.LOCK_SCREEN;
+                break;
+            case LOCK_SCREEN:
+                attackLoserByLockScreen();
+                mAttackMode = AttackMode.VIBRATE;
+                break;
+        }
+    }
+
+    private void attackLoserByVibrate(){
+        Vibrator vibrator = (Vibrator) mContextActivity.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(SaveAssConstants.VIBRATE_DURATION);
+    }
+
+    private void attackLoserByCrackScreen(){
+        Intent intent = new Intent(mContextActivity, CrackScreenActivity.class);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContextActivity.startActivity(intent);
+    }
+
+    private void attackLoserByLockScreen(){
+
     }
 
     public void startSaveAss(){
@@ -55,34 +90,32 @@ class SaveAssCountDownTimer extends CountDownTimer {
 
     //update the notification as counting down in minutes
     private void updateCountdownNotification(int timeLeft){
-        NotificationManager mNotificationManager;
-        NotificationCompat.Builder mNotifyBuilder;
+        NotificationManager notificationManager;
+        NotificationCompat.Builder notifyBuilder;
 
-        mNotificationManager = (NotificationManager) contextActivity.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotifyBuilder = new NotificationCompat.Builder(contextActivity)
-                .setContentTitle(contextActivity.getString(R.string.app_name))
-                .setContentText(timeLeft + " " + contextActivity.getString(R.string.notification_content))
+        notificationManager = (NotificationManager) mContextActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        notifyBuilder = new NotificationCompat.Builder(mContextActivity)
+                .setContentTitle(mContextActivity.getString(R.string.app_name))
+                .setContentText(timeLeft + " " + mContextActivity.getString(R.string.notification_content))
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setTicker(contextActivity.getString(R.string.notification_ticker))
+                .setTicker(mContextActivity.getString(R.string.notification_ticker))
                 .setOngoing(true);
         // Creates an explicit intent for an Activity in your app
-        //Intent resultIntent = new Intent(contextActivity, MainActivity.class);
-        Intent resultIntent = new Intent(contextActivity, CrackScreenActivity.class); //this should be replaced by the above line
+        Intent resultIntent = new Intent(mContextActivity, MainActivity.class);
         resultIntent.putExtra(SaveAssConstants.EXTRA_IS_FROM_NOTIFICATION, true);
-        resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(contextActivity, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        mNotifyBuilder.setContentIntent(resultPendingIntent);
-        mNotificationManager.notify(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID, mNotifyBuilder.build());
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(mContextActivity, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        notifyBuilder.setContentIntent(resultPendingIntent);
+        notificationManager.notify(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID, notifyBuilder.build());
     }
 
     private void returnHome(){
         Intent home = new Intent(Intent.ACTION_MAIN);
         home.addCategory(Intent.CATEGORY_HOME);
-        contextActivity.startActivity(home);
+        mContextActivity.startActivity(home);
     }
 
     private void startTimeUpActivity(){
-        Intent intent = new Intent(contextActivity, TimeUpActivity.class);
-        contextActivity.startActivity(intent);
+        Intent intent = new Intent(mContextActivity, TimeUpActivity.class);
+        mContextActivity.startActivity(intent);
     }
 }
