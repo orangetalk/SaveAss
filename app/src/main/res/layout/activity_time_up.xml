@@ -24,10 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_3_more_minuties"
-        android:id="@+id/button3"
+        android:id="@+id/restart_button"
         android:layout_alignTop="@+id/button2"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="start3MoreMinutesCountdown" />
+        android:onClick="onRestartButtonClick" />
 
 </RelativeLayout>

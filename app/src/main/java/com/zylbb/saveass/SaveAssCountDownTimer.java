@@ -31,13 +31,22 @@ public class SaveAssCountDownTimer extends CountDownTimer {
     @Override
     public void onFinish() {
         startTimeUpActivity();
+
+        //update the notification with pending intent=TimeUpActivity. If the user click back/home/task button to hide the TimeUpActivity, he can resume it from notification
+        Intent resultIntent = new Intent(mContextActivity, TimeUpActivity.class);
+        resultIntent.putExtra(SaveAssConstants.EXTRA_IS_FROM_NOTIFICATION, true);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(mContextActivity, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        updateCountdownNotification(0, resultPendingIntent);
     }
 
     @Override
     public void onTick(long millisUntilFinished) {
         int timeLeftInMinute = (int)(millisUntilFinished/1000/60);
         if(timeLeftInMinute!=lastTimeLeftInMinute) {
-            updateCountdownNotification(timeLeftInMinute);
+            Intent resultIntent = new Intent(mContextActivity, MainActivity.class);
+            resultIntent.putExtra(SaveAssConstants.EXTRA_IS_FROM_NOTIFICATION, true);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(mContextActivity, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            updateCountdownNotification(timeLeftInMinute, resultPendingIntent);
             lastTimeLeftInMinute = timeLeftInMinute;
         }
 
@@ -46,7 +55,7 @@ public class SaveAssCountDownTimer extends CountDownTimer {
         if(mContextActivity instanceof TimeUpActivity){
             if(timeLeftInSeconds%mTimeToAttack==0){
                 attackLoser();
-                mTimeToAttack = new Random().nextInt(20);
+                mTimeToAttack = new Random().nextInt(20) + 1;  //in case mTimeToAttack=0, plus 1 here
             }
         }
     }
@@ -75,7 +84,7 @@ public class SaveAssCountDownTimer extends CountDownTimer {
 
     private void attackLoserByCrackScreen(){
         Intent intent = new Intent(mContextActivity, CrackScreenActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContextActivity.startActivity(intent);
     }
 
@@ -83,13 +92,16 @@ public class SaveAssCountDownTimer extends CountDownTimer {
 
     }
 
-    public void startSaveAss(){
-        updateCountdownNotification(SaveAssConstants.TIME_FOR_TOILET);
-        returnHome();
+    public void startCountDown(){
+        Intent resultIntent = new Intent(mContextActivity, MainActivity.class);
+        resultIntent.putExtra(SaveAssConstants.EXTRA_IS_FROM_NOTIFICATION, true);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(mContextActivity, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        updateCountdownNotification(SaveAssConstants.TIME_FOR_TOILET, resultPendingIntent);
+        start();
     }
 
     //update the notification as counting down in minutes
-    private void updateCountdownNotification(int timeLeft){
+    private void updateCountdownNotification(int timeLeft, PendingIntent resultPendingIntent){
         NotificationManager notificationManager;
         NotificationCompat.Builder notifyBuilder;
 
@@ -100,22 +112,13 @@ public class SaveAssCountDownTimer extends CountDownTimer {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setTicker(mContextActivity.getString(R.string.notification_ticker))
                 .setOngoing(true);
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(mContextActivity, MainActivity.class);
-        resultIntent.putExtra(SaveAssConstants.EXTRA_IS_FROM_NOTIFICATION, true);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(mContextActivity, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         notifyBuilder.setContentIntent(resultPendingIntent);
         notificationManager.notify(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID, notifyBuilder.build());
     }
 
-    private void returnHome(){
-        Intent home = new Intent(Intent.ACTION_MAIN);
-        home.addCategory(Intent.CATEGORY_HOME);
-        mContextActivity.startActivity(home);
-    }
-
     private void startTimeUpActivity(){
         Intent intent = new Intent(mContextActivity, TimeUpActivity.class);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContextActivity.startActivity(intent);
     }
 }

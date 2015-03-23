@@ -53,20 +53,27 @@ public class MainActivity extends ActionBarActivity {
     }
 
     //called when start_done button is clicked to start or stop a countdown timer
-    public void start_doneCountdown(View view){
+    public void onStartDoneButtonClick(View view){
         Button button = (Button)view;
         if(button.getText().equals(getString(R.string.button_start))) {
             button.setText(getString(R.string.button_done));
-            startCountdown();
+            startToilet();
         }
         else
             doneToilet();
     }
 
-    private void startCountdown(){
+    private void startToilet(){
         SaveAssCountDownTimer saveAssCountDownTimer = new SaveAssCountDownTimer(this, SaveAssConstants.TIME_FOR_TOILET*60*1000, 1000);
-        saveAssCountDownTimer.startSaveAss();
-        saveAssCountDownTimer.start();
+        saveAssCountDownTimer.startCountDown();
+
+        returnHomeScreen();
+    }
+
+    private void returnHomeScreen(){
+        Intent home = new Intent(Intent.ACTION_MAIN);
+        home.addCategory(Intent.CATEGORY_HOME);
+        startActivity(home);
     }
 
     private void doneToilet(){

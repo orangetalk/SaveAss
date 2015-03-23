@@ -2,6 +2,7 @@ package com.zylbb.saveass;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -50,9 +51,20 @@ public class TimeUpActivity extends ActionBarActivity {
     }
 
     //called when 3 more minutes button is clicked to start a countdown timer
-    public void start3MoreMinutesCountdown(View view){
+    public void onRestartButtonClick(View view){
+        startToilet();
+    }
+
+    private void startToilet(){
         SaveAssCountDownTimer saveAssCountDownTimer = new SaveAssCountDownTimer(this, SaveAssConstants.TIME_FOR_TOILET*60*1000, 1000);
-        saveAssCountDownTimer.startSaveAss();
-        saveAssCountDownTimer.start();
+        saveAssCountDownTimer.startCountDown();
+
+        returnHomeScreen();
+    }
+
+    private void returnHomeScreen(){
+        Intent home = new Intent(Intent.ACTION_MAIN);
+        home.addCategory(Intent.CATEGORY_HOME);
+        startActivity(home);
     }
 }

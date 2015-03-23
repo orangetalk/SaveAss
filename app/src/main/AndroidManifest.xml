@@ -12,7 +12,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop" >
+            android:launchMode="singleInstance" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,12 +21,13 @@
         <activity
             android:name=".TimeUpActivity"
             android:label="@string/title_activity_time_up"
-            android:launchMode="singleTop" >
+            android:launchMode="singleInstance" >
         </activity>
         <activity
             android:name=".CrackScreenActivity"
             android:label="@string/title_activity_crack_screen"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:launchMode="singleInstance">
         </activity>
     </application>
 
