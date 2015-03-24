@@ -55,7 +55,7 @@ public class SaveAssCountDownTimer extends CountDownTimer {
         if(mContextActivity instanceof TimeUpActivity){
             if(timeLeftInSeconds%mTimeToAttack==0){
                 attackLoser();
-                mTimeToAttack = new Random().nextInt(20) + 1;  //in case mTimeToAttack=0, plus 1 here
+                mTimeToAttack = new Random().nextInt(10) + 10;  //in case mTimeToAttack=0, plus 10 here
             }
         }
     }

@@ -12,4 +12,5 @@ public final class SaveAssConstants {
     public static final int TIME_FOR_TOILET = 1;  //should be 3, 1 used for test
     public static final int VIBRATE_DURATION = 500;
     public static final String EXTRA_IS_FROM_NOTIFICATION = "com.zylbb.saveass.EXTRA_IS_FROM_NOTIFICATION";
+    public static final int NUMBER_OF_CRACKED_HOLES = 3;
 }

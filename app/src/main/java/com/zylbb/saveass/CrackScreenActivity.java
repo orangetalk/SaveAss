@@ -14,6 +14,8 @@ public class CrackScreenActivity extends Activity {
 
         CrackScreenView crackScreenView = new CrackScreenView(this);
         setContentView(crackScreenView);
+
+        new Thread(crackScreenView).start();
     }
 
 
