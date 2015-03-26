@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="time_for_toilet_list"
+        android:title="@string/pref_title_time_for_toilet"
+        android:defaultValue="3"
+        android:entries="@array/pref_time_for_toilet_list_titles"
+        android:entryValues="@array/pref_time_for_toilet_list_values"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+    <SwitchPreference
+        android:key="vibrate_attack_switch"
+        android:title="@string/pref_title_vibrate_attack"
+        android:defaultValue="true" />
+    <SwitchPreference
+        android:key="crack_screen_attack_switch"
+        android:title="@string/pref_title_crack_screen_attack"
+        android:defaultValue="true" />
+    <SwitchPreference
+        android:key="lock_screen_attack_switch"
+        android:title="@string/pref_title_lock_screen_attack"
+        android:defaultValue="true" />
+    <SwitchPreference
+        android:key="sound_attack_switch"
+        android:title="@string/pref_title_sound_attack"
+        android:defaultValue="true" />
+</PreferenceScreen>

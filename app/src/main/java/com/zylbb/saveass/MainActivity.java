@@ -3,6 +3,7 @@ package com.zylbb.saveass;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,8 @@ public class MainActivity extends ActionBarActivity {
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
         Log.d("Activity Lifecycle", "MainActivity onCreate");
     }
 
@@ -46,6 +49,9 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this,SettingsActivity.class);
+            startActivity(intent);
+
             return true;
         }
 
@@ -67,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
         SaveAssCountDownTimer saveAssCountDownTimer = new SaveAssCountDownTimer(this, SaveAssConstants.TIME_FOR_TOILET*60*1000, 1000);
         saveAssCountDownTimer.startCountDown();
 
-        returnHomeScreen();
+        finish();
     }
 
     private void returnHomeScreen(){

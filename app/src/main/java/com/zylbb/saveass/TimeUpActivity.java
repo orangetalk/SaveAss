@@ -2,7 +2,6 @@ package com.zylbb.saveass;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,7 +24,7 @@ public class TimeUpActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_time_up, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -59,12 +58,6 @@ public class TimeUpActivity extends ActionBarActivity {
         SaveAssCountDownTimer saveAssCountDownTimer = new SaveAssCountDownTimer(this, SaveAssConstants.TIME_FOR_TOILET*60*1000, 1000);
         saveAssCountDownTimer.startCountDown();
 
-        returnHomeScreen();
-    }
-
-    private void returnHomeScreen(){
-        Intent home = new Intent(Intent.ACTION_MAIN);
-        home.addCategory(Intent.CATEGORY_HOME);
-        startActivity(home);
+        finish();
     }
 }

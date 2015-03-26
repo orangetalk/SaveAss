@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Save Ass</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <string name="notification_content">minutes left</string>
@@ -10,9 +8,9 @@
     <string name="button_start">Start</string>
     <string name="title_activity_time_up">TimeUpActivity</string>
     <string name="button_done">Done</string>
-    <string name="button_3_more_minuties">3 more minutes</string>
+    <string name="button_3_more_minutes">3 more minutes</string>
 
     <string name="title_activity_crack_screen">CrackScreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_settings">Settings</string>
 </resources>
