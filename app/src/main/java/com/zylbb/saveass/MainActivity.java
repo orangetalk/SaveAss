@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends ActionBarActivity {
-    NotificationManager mNotificationManager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +25,7 @@ public class MainActivity extends ActionBarActivity {
             Log.d("Activity Lifecycle", "MainActivity onCreate from notification");
         }
 
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
+        //Set preference default values
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         Log.d("Activity Lifecycle", "MainActivity onCreate");
@@ -83,7 +81,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void doneToilet(){
-        mNotificationManager.cancel(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID);
         System.exit(0);
     }
 

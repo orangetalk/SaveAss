@@ -26,6 +26,9 @@ public class SettingsActivity extends Activity  {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
+
+            ListPreference listPref = (ListPreference) findPreference(SaveAssConstants.PREF_KEY_TIME_FOR_TOILET_LIST);
+            listPref.setSummary(listPref.getEntry());
         }
 
         @Override
