@@ -55,7 +55,7 @@ public class TimeUpActivity extends ActionBarActivity {
     }
 
     private void startToilet(){
-        SaveAssCountDownTimer saveAssCountDownTimer = new SaveAssCountDownTimer(this, SaveAssConstants.TIME_FOR_TOILET*60*1000, 1000);
+        SaveAssCountDownTimer saveAssCountDownTimer = new SaveAssCountDownTimer(this);
         saveAssCountDownTimer.startCountDown();
 
         finish();

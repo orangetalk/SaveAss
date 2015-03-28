@@ -31,6 +31,16 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+
+        <receiver android:name=".LockScreenReceiver">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/lock_screen_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
