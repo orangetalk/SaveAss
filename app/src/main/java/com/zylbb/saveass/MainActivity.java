@@ -85,29 +85,4 @@ public class MainActivity extends ActionBarActivity {
         notificationManager.cancel(SaveAssConstants.COUNTDOWN_NOTIFICATION_ID);
         System.exit(0);
     }
-
-    @Override
-    public void onRestart(){
-        super.onRestart();
-        Log.d("Activity Lifecycle", "MainActivity onRestart");
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-
-        Log.d("Activity Lifecycle", "MainActivity onStart");
-    }
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        Log.d("Activity Lifecycle", "MainActivity onStop");
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        Log.d("Activity Lifecycle", "MainActivity onDestroy");
-    }
 }

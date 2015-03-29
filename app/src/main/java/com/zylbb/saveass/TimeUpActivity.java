@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,5 +60,11 @@ public class TimeUpActivity extends ActionBarActivity {
         saveAssCountDownTimer.startCountDown();
 
         finish();
+    }
+
+    //forbid the user to quit the activity by pressing back
+    @Override
+    public void onBackPressed(){
+        Log.d("Activity Lifecycle", "MainActivity onBackPressed");
     }
 }

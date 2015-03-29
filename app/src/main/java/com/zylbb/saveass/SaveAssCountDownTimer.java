@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -151,7 +152,8 @@ public class SaveAssCountDownTimer extends CountDownTimer {
     }
 
     private void attackLoserBySound(){
-
+        MediaPlayer mediaPlayer = MediaPlayer.create(mContextActivity, R.raw.save_ass);
+        mediaPlayer.start();
     }
 
     public void startCountDown(){
