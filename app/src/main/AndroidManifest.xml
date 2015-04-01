@@ -32,15 +32,21 @@
             android:label="@string/title_activity_settings" >
         </activity>
 
-        <receiver android:name=".LockScreenReceiver">
+        <receiver android:name=".LockScreenReceiver" >
             <meta-data
                 android:name="android.app.device_admin"
                 android:resource="@xml/lock_screen_admin" />
+
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name=".MeteorActivity"
+            android:label="@string/title_activity_meteor"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+        </activity>
     </application>
 
 </manifest>

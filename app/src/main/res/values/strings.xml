@@ -13,4 +13,7 @@
     <string name="title_activity_crack_screen">CrackScreenActivity</string>
 
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_meteor">MeteorActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

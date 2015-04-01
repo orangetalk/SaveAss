@@ -58,13 +58,20 @@ public class MainActivity extends ActionBarActivity {
 
     //called when start_done button is clicked to start or stop a countdown timer
     public void onStartDoneButtonClick(View view){
-        Button button = (Button)view;
+        /*Button button = (Button)view;
         if(button.getText().equals(getString(R.string.button_start))) {
             button.setText(getString(R.string.button_done));
             startToilet();
         }
         else
-            doneToilet();
+            doneToilet();*/
+
+        testNewFeature();
+    }
+
+    private void testNewFeature(){
+        Intent intent = new Intent(this, MeteorActivity.class);
+        startActivity(intent);
     }
 
     private void startToilet(){
@@ -72,12 +79,6 @@ public class MainActivity extends ActionBarActivity {
         saveAssCountDownTimer.startCountDown();
 
         finish();
-    }
-
-    private void returnHomeScreen(){
-        Intent home = new Intent(Intent.ACTION_MAIN);
-        home.addCategory(Intent.CATEGORY_HOME);
-        startActivity(home);
     }
 
     private void doneToilet(){
